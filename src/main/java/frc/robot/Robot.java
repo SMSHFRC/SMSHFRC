@@ -1,5 +1,5 @@
 package frc.robot;
-
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
 
   
   public void robotInit() {
-    
+  
 
   }
 
@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() { 
     //double direct_speed=m_stick.getRawAxis(3)-m_stick.getRawAxis(2);
     //double angel_speed=m_stick.getRawAxis(0)*0.3;
-    m_robotDrive.curvatureDrive(m_stick.getRawAxis(0)*0.3 ,m_stick.getRawAxis(3)*0.8-m_stick.getRawAxis(2)*0.8,true);
+    m_robotDrive.curvatureDrive((m_stick.getRawAxis(3)*0.8-m_stick.getRawAxis(2)*0.8>=0) ?m_stick.getRawAxis(0)*0.3:m_stick.getRawAxis(0)*-0.3  ,m_stick.getRawAxis(3)*0.8-m_stick.getRawAxis(2)*0.8,true);
  }
  @Override
  public void  autonomousInit(){
@@ -40,11 +40,11 @@ public class Robot extends TimedRobot {
  }
  public void autonomousPeriodic(){
   double time=Timer.getFPGATimestamp();
-  if (time - startTime < 3) {
-    LeftMotor.set(0.6);
-    LeftMotor.set(0.6);
-    RightMotor.set(-0.6);
-    RightMotor.set(-0.6);
+  if (time - startTime <= 3) {
+    LeftMotor.set(0.2);
+    
+    RightMotor.set(-0.2);
+    
   } else {
     LeftMotor.set(0);
     LeftMotor.set(0);
